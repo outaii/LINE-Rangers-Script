@@ -151,6 +151,17 @@ function fitUnknownMineTime()
 	end
 end
 
+function isFightButtonShow()  --2015-08-16
+	--pause button  1200,40,0x743517
+	--missile button 1015,668,0x602913
+	--crystal button 139,670,0x602913
+	if isColor(1200,40,0x743517) and isColor(1015,668,0x602913) then
+			toast("isFightButtonShow");
+		return true;
+	end
+	return false;
+end
+
 function isFightingViewColor()
 	if isColor(1197,74,0x763A19) or isColor(1197,74,0x773B19) then
 		return true;
@@ -183,6 +194,15 @@ function gotoGameAgain()
 		touchClick(165,109);
 		sleep(20000);		
 	end
+end
+
+--ADD 2015-08-16
+function someSlideToLeft()
+	touchDown(731,549);
+	sleep(200);
+	touchMove(912,549);
+	touchUp();	
+	sleep(2000);
 end
 
 function slideToLeft()
@@ -430,7 +450,10 @@ function loopFifghtingInSpecialMode(useSkill,checkTimeMode)
 		pickFriendAndSkill(checkTimeMode);
 								
 		-- 超過入場次數
-		if isColor(595,518, 0x5A1B0C) and isColor(697,518, 0x5A1C0D) then			
+toast("453");
+--		if isColor(595,518, 0x5A1B0C) and isColor(697,518, 0x5A1C0D) then
+		if isColor(712,283, 0xFFFFFF) and isColor(721,488, 0x00BB33) then			
+			--712,283 入 0xFFFFFF white ;  721,488 btn 0x00BB33 green	
 			toast("超過入場次數");
 			touchClick(599,479); --確認btn
 			sleep(2000);
@@ -569,15 +592,26 @@ function pickFriendAndSkill(checkTimeMode)
 			touchClick(1095,145);		
 			sleep(3000);			
 		end
+		
+		-- 關閉素材視窗 20150818
+		if(isColor(1071,74,0xFFEE44) and isColor(840,543,0xDDCCAA)) then 
+			toast("關閉素材視窗 20150818");		
+			sleep(100);
+			touchClick(1071,74);
+			sleep(500);
+		end
 							
 		--選技能畫面					  
 		if isColor(610,610,0x24AAC6) or isColor(722,645,0xCF0F00) or isColor(610,610,0x0ABCCB) then
-			sleep(500);	
-			touchClick(610,610); -- 下一步btn					
+			toast("選技能畫面");	
+			sleep(100);	
+			touchClick(610,610); -- 下一步btn
+			sleep(500);					
 		end
 		
 		--選朋友畫面   
 		if isColor(255,344,0xB49266) or isColor(270,482,0xDCE5EF) or isColor(255,344,0xB18F65) or isColor(254,333,0xB39166) then
+			toast("選朋友畫面");	
 			if autoPickFriend() then
 				--  0xD1B894 舊關卡沒選color   ,  0x8E9CA9 新關卡沒選color
 				if isColor(481,500,0xD1B894) or isColor(481,500,0x8E9CA9) then
@@ -591,13 +625,6 @@ function pickFriendAndSkill(checkTimeMode)
 			end
 						
 			touchClick(610,610); --next 進入戰鬥		
-			--sleep(1500);
-			--nextFightFlg = true;						
-		--else
-			-- 2015-08-16 add by Jay.
-			--if nextFightFlg == true then			
-				--break;
-			--end
 		end	
 
 		-- 羽毛不足視窗
@@ -618,7 +645,7 @@ function pickFriendAndSkill(checkTimeMode)
 		else			
 			break;
 		end
-					
+			
 		if(checkTimeMode == "Clockwork") then
 			if fitInverseClockworkTime() == false then
 				goto endpickFriendAndSkill
