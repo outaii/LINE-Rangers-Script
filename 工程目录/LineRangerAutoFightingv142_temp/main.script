@@ -563,7 +563,14 @@ function fighting(useSkill)
 				break;					
 			end
 			sleep(2000);
-	
+
+--ADD 20150826
+if isColor(512,549,0xC1C74B) or isColor(646,643,0xCF0F00) then
+	--512,549,0xC1C74B  base color green    646,643,0xCF0F00  btn red
+	toast("在關卡畫面 結束fight");
+	break;
+end			
+
 		end			
 		sleep(1000);
 	end
@@ -572,7 +579,7 @@ end
 function pickFriendAndSkill(checkTimeMode)	
 	local nextFightFlg = false;	
 	while true do  
-		sleep(200); -- prevent over loop
+		--sleep(200); -- prevent over loop
 		
 		if isFightingViewColor() then
 			goto endpickFriendAndSkill
@@ -623,6 +630,13 @@ function pickFriendAndSkill(checkTimeMode)
 						
 			touchClick(610,610); --next 進入戰鬥		
 		end	
+		
+		--TODO for test tobe remove 2015-08-16
+		if isFightingViewColor() then
+			toast("#2");
+			fireRangerByPorgressColor();
+			goto endpickFriendAndSkill	
+		end
 
 		-- 羽毛不足視窗
 		if isColor(463,432,0x612C14) and isColor(483,432,0x612C14) and not(isColor(812,686,0x200200)) then 
