@@ -459,13 +459,13 @@ function loopFifghtingInSpecialMode(useSkill,checkTimeMode)
 			--back to special view , to next .
 			--touchDown(42,65); --old
 			touchClick(43,95);				
-			sleep(4000);
+			sleep(2000);
 			goto endloopFifghtingInSpecialMode
 		end
 		
 		--戰鬥畫面
 		if isFightingViewColor() then
-			toast("偵測到戰鬥開始");
+			toast("偵測到戰鬥開始s");
 			fighting(useSkill);						
 		end				
 	end					
@@ -480,7 +480,7 @@ function fighting(useSkill)
 		-- 檢查右上角有沒有暫停按鈕  				
 		if not isFightingViewColor() then			
 			toast("戰鬥結束 - 判斷結果");
-			sleep(5000)			
+			sleep(3000);
 			--loss
 			if isColor(471,476,0xFFFFFF) and isColor(474,476,0xFFFFFF) then
 				toast("LOSS");
@@ -565,23 +565,26 @@ function fighting(useSkill)
 			sleep(2000);
 
 --ADD 20150826
-if isColor(512,549,0xC1C74B) or isColor(646,643,0xCF0F00) then
+if (isColor(512,549,0xC1C74B) and isColor(646,643,0xCF0F00)) or (isColor(117,582,0x00BE0A) and isColor(255,578,0x9B1FFF)) then
 	--512,549,0xC1C74B  base color green    646,643,0xCF0F00  btn red
+	--117,582,0x00BE0A  btn green  main page right bottom corner 255,578,0x9B1FFF btn purple
 	toast("在關卡畫面 結束fight");
 	break;
 end			
 
 		end			
-		sleep(1000);
+		sleep(800);
 	end
 end
 
 function pickFriendAndSkill(checkTimeMode)	
-	local nextFightFlg = false;	
+
 	while true do  
 		--sleep(200); -- prevent over loop
 		
 		if isFightingViewColor() then
+			fireRangerByPorgressColor();		
+			toast("Fight Begin1!");
 			goto endpickFriendAndSkill
 		end
 		
@@ -594,9 +597,9 @@ function pickFriendAndSkill(checkTimeMode)
 		-- 本月加成
 		if (isColor(1095,145,0x000000) and isColor(1098,147,0xFFEE44)) then
 			toast("出現攻擊加成視窗");
-			sleep(3000);
+			--sleep(3000);
 			touchClick(1095,145);		
-			sleep(3000);			
+			sleep(1000); --sleep(3000);	
 		end
 		
 		-- 關閉素材視窗 20150818
@@ -628,13 +631,14 @@ function pickFriendAndSkill(checkTimeMode)
 				end
 			end
 						
-			touchClick(610,610); --next 進入戰鬥		
+			touchClick(610,610); --next 進入戰鬥
+			sleep(100);
 		end	
 		
-		--TODO for test tobe remove 2015-08-16
-		if isFightingViewColor() then
-			toast("#2");
-			fireRangerByPorgressColor();
+--TODO for test tobe remove 2015-08-16
+		if isFightButtonShow() then
+			fireRangerByPorgressColor();		
+			toast("Fight Begin2!");
 			goto endpickFriendAndSkill	
 		end
 
